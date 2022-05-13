@@ -7,12 +7,12 @@ X = [randn(100,2)*0.75+ones(100,2);
 
 k=3;
 f1 = tic();
-[labels, medoids, v] = my_k_medoids(X, k);
+[labels, medoids, v] = optimized_k_medoids(X, k);
 exc_time1 = toc(f1);
 
 
 f2 = tic();
-[labels2, medoids2, v2] = optimized_k_medoids(X, k);
+[labels2, medoids2, v2] = partially_provided_k_medoids(X, k, [14; 178]);
 exc_time2 = toc(f2);
 
 
@@ -21,6 +21,7 @@ exc_time2 = toc(f2);
 %plot(X(:,1),X(:,2),'.');
 %title('Randomly Generated Data');
 
+%{
 f3 = tic();
 [idx, C, energy] = kmedoids(X,k);
 exc_time3 = toc(f3);
@@ -41,4 +42,4 @@ legend('Cluster 1','Cluster 2','Cluster 3', 'Location','NW');
 
 title('Cluster Assignments and Medoids');
 hold off
-
+%}
