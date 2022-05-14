@@ -5,7 +5,7 @@ X = [randn(100,2)*0.75+ones(100,2);
     randn(100,2)*0.55-ones(100,2)];
 
 
-k=3;
+k=4;
 f1 = tic();
 [labels, medoids, v] = optimized_k_medoids(X, k);
 exc_time1 = toc(f1);

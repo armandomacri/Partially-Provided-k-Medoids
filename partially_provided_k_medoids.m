@@ -26,7 +26,7 @@ function [membership, all_medoids, v, distances, iterations] = partially_provide
     [distances, membership] = min(poits, [], 1);
     membership = membership';
     
-    %show(data, membership, k, all_medoids, 'Cluster centres initialized!');
+    show(data, membership, all_medoids(1:remaning), all_medoids(remaning+1:k), 'Cluster centres initialized!');
     
     iterations = 0;
 
@@ -53,7 +53,7 @@ function [membership, all_medoids, v, distances, iterations] = partially_provide
         
         iterations = iterations+1;
 
-        %show(data, new_membership, k, all_medoids, 'Cluster centres initialized!');
+        show(data, new_membership, all_medoids(1:remaning), all_medoids(remaning+1:k), 'Cluster centres initialized!');
         
     %   Stop if no more updates.
         if sum(membership ~= new_membership)==0
@@ -67,23 +67,24 @@ function [membership, all_medoids, v, distances, iterations] = partially_provide
 end
 
 
- function show(X, c_pred, n_cluster, centres, txt)
-    symbol = ['b.'; 'r.'; 'g.'; 'k.'; 'r.'];
-    hold off;
-
+ function show(X, c_pred, fixed, candidate, txt)
+    %symbol = ['b.'; 'r.'; 'g.'; 'k.'; 'r.'];
     
-    for i = 1:n_cluster
-        marker = mod(i,5);
-        if i > 4            
-            disp('Total number of clusters exceeds 4, some symbols in the plot are reused!');
-        end
-
-        plot(X(c_pred==i, 1), X(c_pred==i, 2), symbol(marker,:), 'DisplayName', strcat("Cluster", num2str(i)));
-        hold on;
-        
-    end
-    plot(X(centres, 1), X(centres, 2), 'co', 'MarkerSize', 7);
-    %legend('Location','NW');
+    numGroups = length(unique(c_pred));
+    clr = hsv(numGroups);
+    hold off;
+    
+    
+    %figure;
+    gscatter(X(:,1), X(:,2), c_pred, clr, '*')
+    hold on;
+    
+    title(txt);
+    %plot(X(candidate, 1), X(candidate, 2), 'w*');
+    %plot(X(fixed, 1), X(fixed, 2), 'w*');
+    plot(X(fixed, 1), X(fixed, 2), 'kd', 'DisplayName', 'Fixed');
+    plot(X(candidate, 1), X(candidate, 2), 'kx', 'DisplayName', 'Candidate');
+    legend('Location','NW');
     
     %   Pause some time here.
     %   Used to show figure with enough time.
