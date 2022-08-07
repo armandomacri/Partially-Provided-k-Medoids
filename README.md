@@ -6,4 +6,4 @@ Modified version of k-medoids clustering algorithm
 
 * basic implementation of the PAM algorithm [DONE]
 * implementation of the modified version of k-medoids [DONE]
-* use of modified k-medoids within NSGA-II [Faild]
+* use of modified k-medoids within NSGA-II [Failed]
